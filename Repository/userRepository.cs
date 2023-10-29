@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repository;
 
-public class userRepository
+public class userRepository : IuserRepository
 {
     private readonly string filePath = "../users.txt";
 
