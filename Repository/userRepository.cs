@@ -14,12 +14,12 @@ public class userRepository : IuserRepository
     private readonly string filePath = "../users.txt";
 
 
-    public User getUserByEmailAndPassword(string userName, string password)
+    public async Task<User> getUserByEmailAndPassword(string userName, string password)
     {
         using (StreamReader reader = System.IO.File.OpenText(filePath))
         {
             string? currentUserInFile;
-            while ((currentUserInFile = reader.ReadLine()) != null)
+            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
             {
                 User user = JsonSerializer.Deserialize<User>(currentUserInFile);
                 if (user.UserName == userName && user.Password == password)
@@ -27,6 +27,21 @@ public class userRepository : IuserRepository
             }
             return null;
         }
+    }
+
+    public async Task<User> getUserById(int id)
+    {
+        using (StreamReader reader = System.IO.File.OpenText(filePath))
+        {
+            string? currentUserInFile;
+            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
+            {
+                User user = JsonSerializer.Deserialize<User>(currentUserInFile);
+                if (user.userId == id)
+                    return user;
+            }
+        }
+        return null;
     }
 
     public User addUser(User user)
@@ -40,7 +55,7 @@ public class userRepository : IuserRepository
         return user;
     }
 
-    public User updateUser(int id, User userToUpdate)
+    public async Task<User> updateUser(int id, User userToUpdate)
     {
         string textToReplace = string.Empty;
 
@@ -48,7 +63,7 @@ public class userRepository : IuserRepository
         {
 
             string currentUserInFile;
-            while ((currentUserInFile = reader.ReadLine()) != null)
+            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
             {
 
                 User user = JsonSerializer.Deserialize<User>(currentUserInFile);
