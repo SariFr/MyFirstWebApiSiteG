@@ -1,23 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Entity;
 
-public class User
+public partial class User
 {
+    public int Id { get; set; }
 
-    [EmailAddress]
-    [Required]
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
+    public string? Password { get; set; }
 
-    //[StringLength(8, ErrorMessage = "password can't be more than 8")]
-    [Required]
-    public string Password { get; set; }
+    public string? FirstName { get; set; }
 
-    public string FirstName { get; set; }
-
-    public string LastName { get; set; }
-
-    public int userId { get; set; }
-
+    public string? LastName { get; set; }
 }
