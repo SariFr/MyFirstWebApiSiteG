@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Entity;
+namespace Repository;
 
 public partial class WebElectricStoreContext : DbContext
 {
