@@ -1,9 +1,9 @@
-﻿async function loginServer() {
+﻿//login (function name)
+async function loginServer() {
     try {
 
         const userName = document.getElementById("txtUserName").value;
         const password = document.getElementById("txtPassword").value;
-
         const res = await fetch(`api/user?userName=${userName}&password=${password}`)
         if (!res.ok)
             throw new Error("pleas register")
@@ -17,20 +17,22 @@
     }
 }
 
-
+//showRegistrationForm() - (meaningfull function name)
 function newUser() {
+    //new1 - change variable name (clean code) to newUser etc...
     const new1 = document.getElementById("new")
     new1.style.visibility = "initial"
 }
 
+//function name- register() or signUp()
 async function addUserToServer() {
     try {
         const userName = document.getElementById("txtNewUserName").value
         const password = document.getElementById("txtNewPassword").value
         const firstName = document.getElementById("txtFirstName").value
         const lastName = document.getElementById("txtLastName").value
-
         const user = { userName, password, firstName, lastName }
+        //const User = { UserName:userName, Password:password, FirstName:firstName, LastName:lastName }, Prefix -UpperCase
         console.log(user)
 
         const res = await fetch("api/user", {
@@ -52,6 +54,8 @@ async function addUserToServer() {
 }
 
 async function checkPassword() {
+//variables in js- const (if it's possible)
+
     var res;
     var strength = {
         0: "Worst",
@@ -73,9 +77,9 @@ async function checkPassword() {
             body: JSON.stringify(password)
 
         })
+        //await! instead of .then
         .then(r => r.json())
         .then(data => res = data)
-
 
 
 
