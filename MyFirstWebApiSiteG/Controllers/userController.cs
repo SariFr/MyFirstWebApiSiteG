@@ -44,12 +44,12 @@ namespace MyFirstWebApiSite.Controllers
 
         // POST api/<userController>
         [HttpPost]
-        public IActionResult Post([FromBody] User user)
+        public async Task<IActionResult> Post([FromBody] User user)
         {
             try
             {
-                User newUser = userService.addUser(user);
-                return CreatedAtAction(nameof(Get), new { id = user.userId }, newUser);
+                User newUser =await userService.addUser(user);
+                return CreatedAtAction(nameof(Get), new { id = user.UserId }, newUser);
             }
             catch (Exception ex)
             {
@@ -65,12 +65,11 @@ namespace MyFirstWebApiSite.Controllers
         }
         // PUT api/<userController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] User userToUpdate)
+        public async Task Put(int id, [FromBody] User userToUpdate)
         {
             try
             {
-                User newUser = await userService.updateUser(id, userToUpdate);
-                return Ok(newUser);
+                await userService.updateUser(id, userToUpdate);
             }
             catch (Exception ex)
             {

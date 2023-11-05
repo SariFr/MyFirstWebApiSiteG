@@ -12,12 +12,12 @@ public class userService : IuserService
         userRepository = iuserRepository;
     }
 
-    public User addUser(User user)
+    public async Task<User> addUser(User user)
     {
         int res = checkPassword(user.Password);
         if (res <= 2)
             return null;
-        return userRepository.addUser(user);
+        return await userRepository.addUser(user);
     }
 
     public async  Task<User> getUserByEmailAndPassword(string userName, string password)
@@ -30,13 +30,11 @@ public class userService : IuserService
         return await userRepository.getUserById(id);
     }
 
-    public async Task<User> updateUser(int id, User user)
+    public async Task updateUser(int id, User user)
     {
         int res = checkPassword(user.Password);
-        if (res <= 2)
-            return null;
-
-        return await userRepository.updateUser(id, user);
+        if (res > 2)
+            await userRepository.updateUser(id, user);
     }
 
     public int checkPassword(string pwd)

@@ -1,4 +1,5 @@
 ﻿using Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,75 +13,42 @@ namespace Repository;
 public class userRepository : IuserRepository
 {
     private readonly string filePath = "../users.txt";
+    private readonly WebElectricStoreContext _WebElectricStoreContext;
 
+
+    public userRepository(WebElectricStoreContext WebElectricStoreContext)
+    {
+        _WebElectricStoreContext = WebElectricStoreContext;
+    }
 
     public async Task<User> getUserByEmailAndPassword(string userName, string password)
     {
-        using (StreamReader reader = System.IO.File.OpenText(filePath))
-        {
-            string? currentUserInFile;
-            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-            {
-                User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                if (user.UserName == userName && user.Password == password)
-                    return user;
-            }
-            return null;
-        }
+
+         return await _WebElectricStoreContext.Users.Where(user=>user.UserName== userName && user.Password==password).FirstOrDefaultAsync();
+
+
+   
     }
 
     public async Task<User> getUserById(int id)
     {
-        using (StreamReader reader = System.IO.File.OpenText(filePath))
-        {
-            string? currentUserInFile;
-            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-            {
-                User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                if (user.Id == id)
-                    return user;
-            }
-        }
-        return null;
+        return await _WebElectricStoreContext.Users.FindAsync(id);
+
     }
 
-    public User addUser(User user)
+    public async Task<User> addUser(User user)
     {
-
-        int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
-        user.Id = numberOfUsers + 1;
-        string userJson = JsonSerializer.Serialize(user);
-        System.IO.File.AppendAllText(filePath, userJson + Environment.NewLine);
+        await _WebElectricStoreContext.Users.AddAsync(user);
+        await _WebElectricStoreContext.SaveChangesAsync();
 
         return user;
     }
 
-    public async Task<User> updateUser(int id, User userToUpdate)
+    public async Task updateUser(int id, User user)
     {
-        string textToReplace = string.Empty;
+        _WebElectricStoreContext.Update(user);
+        await _WebElectricStoreContext.SaveChangesAsync();
 
-        using (StreamReader reader = System.IO.File.OpenText(filePath))
-        {
 
-            string currentUserInFile;
-            while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-            {
-
-                User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                if (user.Id == id)
-                    textToReplace = currentUserInFile;
-            }
-        }
-
-        if (textToReplace != string.Empty)
-        {
-            string text = System.IO.File.ReadAllText(filePath);
-            text = text.Replace(textToReplace, JsonSerializer.Serialize(userToUpdate));
-            System.IO.File.WriteAllText(filePath, text);
-            return userToUpdate;
-        }
-        return null;
     }
-
-
 }
