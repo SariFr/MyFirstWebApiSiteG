@@ -2,7 +2,7 @@
 using Repository;
 
 namespace Service;
-
+//Rename folder to Services
 public class userService : IuserService
 {
     private readonly IuserRepository userRepository;
@@ -14,6 +14,7 @@ public class userService : IuserService
 
     public User addUser(User user)
     {
+        //async await
         int res = checkPassword(user.Password);
         if (res <= 2)
             return null;

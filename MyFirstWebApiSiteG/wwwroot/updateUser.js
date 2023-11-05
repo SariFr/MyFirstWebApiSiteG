@@ -1,4 +1,5 @@
-﻿let userString = sessionStorage.getItem('currentUser')
+﻿//const
+let userString = sessionStorage.getItem('currentUser')
 let name = JSON.parse(userString)
 
 function helloTo() {
@@ -6,6 +7,7 @@ function helloTo() {
     hello.innerHTML = `hello to ${name.firstName}`
 
 }
+//showUpdateFoem
 function toUpdate() {
     const update = document.getElementById("update")
     update.style.visibility = "initial"
@@ -44,6 +46,8 @@ async function updateUser() {
         alert(ex.message)
     }
 }
+
+//Remove unused function. (the function is written in home.js)
 async function checkPassword() {
     var res;
     var strength = {

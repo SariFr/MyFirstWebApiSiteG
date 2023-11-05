@@ -13,8 +13,9 @@ namespace MyFirstWebApiSite.Controllers
     [ApiController]
     public class userController : ControllerBase
     {
-        IuserService userService ;
+        IuserService userService ; //_userService - convention 
 
+        //IuserService userService (instead of  iuserService)
         public userController(IuserService iuserService)
         {
             userService = iuserService;
@@ -22,7 +23,8 @@ namespace MyFirstWebApiSite.Controllers
 
         // GET: api/<userController>
         [HttpGet]
-         public async Task<ActionResult<IEnumerable<User>>> Get([FromQuery] string userName, [FromQuery] string password)
+        //IEnumerable? 
+        public async Task<ActionResult<IEnumerable<User>>> Get([FromQuery] string userName, [FromQuery] string password)
         {
             User user = await userService.getUserByEmailAndPassword(userName, password);
             if (user == null)
@@ -44,13 +46,18 @@ namespace MyFirstWebApiSite.Controllers
 
         // POST api/<userController>
         [HttpPost]
+        //async await???? Task<ActionResult<User>>
         public IActionResult Post([FromBody] User user)
         {
             try
             {
                 User newUser = userService.addUser(user);
+                //Replace user by newUser  in - new { id = user.userId }
+                //newUser.Id (User in Entity doesn't contain a definition for usreId)
                 return CreatedAtAction(nameof(Get), new { id = user.userId }, newUser);
+                //Check if newUser==null return BadRequest()
             }
+
             catch (Exception ex)
             {
                 throw ex;
@@ -71,6 +78,7 @@ namespace MyFirstWebApiSite.Controllers
             {
                 User newUser = await userService.updateUser(id, userToUpdate);
                 return Ok(newUser);
+                //Check if newUser==null return BadRequest()
             }
             catch (Exception ex)
             {
@@ -79,7 +87,7 @@ namespace MyFirstWebApiSite.Controllers
 
         }
 
-
+        //Clean code -Remove unnecessary lines of code.
         // DELETE api/<userController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
