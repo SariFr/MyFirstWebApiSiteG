@@ -1,9 +1,8 @@
-﻿async function loginServer() {
+﻿async function login() {
     try {
 
         const userName = document.getElementById("txtUserName").value;
         const password = document.getElementById("txtPassword").value;
-
         const res = await fetch(`api/user?userName=${userName}&password=${password}`)
         if (!res.ok)
             throw new Error("pleas register")
@@ -18,27 +17,25 @@
 }
 
 
-function newUser() {
-    const new1 = document.getElementById("new")
-    new1.style.visibility = "initial"
+function showRegistrationForm() {
+    const newdiv = document.getElementById("new")
+    newdiv.style.visibility = "initial"
 }
 
-async function addUserToServer() {
+async function register() {
     try {
         const userName = document.getElementById("txtNewUserName").value
         const password = document.getElementById("txtNewPassword").value
         const firstName = document.getElementById("txtFirstName").value
         const lastName = document.getElementById("txtLastName").value
-
-        const user = { userName, password, firstName, lastName }
-        console.log(user)
-
+        const User = { UserName: userName, Password: password, FirstName: firstName, LastName: lastName };
+        console.log(User)
         const res = await fetch("api/user", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(User)
         })
         if (!res.ok)
             throw new Error("Error add user to server")
@@ -52,17 +49,17 @@ async function addUserToServer() {
 }
 
 async function checkPassword() {
-    var res;
-    var strength = {
+    const res;
+    const strength = {
         0: "Worst",
         1: "Bad",
         2: "Weak",
         3: "Good",
         4: "Strong"
     }
-    var password = document.getElementById("txtNewPassword").value;
-    var pr = document.getElementById('pr');
-    var text = document.getElementById('strength');
+    const password = document.getElementById("txtNewPassword").value;
+    const pr = document.getElementById('pr');
+    const text = document.getElementById('strength');
 
     await fetch('api/user/check',
         {
@@ -76,13 +73,9 @@ async function checkPassword() {
         .then(r => r.json())
         .then(data => res = data)
 
-
-
-
     if (res <= 2) alert("your password is weak!! try again")
     pr.value = res;
     pr.max = 4;
-
     if (password !== "") {
         text.innerHTML = "Strength: " + strength[res];
     } else {

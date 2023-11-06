@@ -1,6 +1,6 @@
 ﻿using Entity;
 
-namespace Repository
+namespace Repositories
 {
     public interface IuserRepository
     {

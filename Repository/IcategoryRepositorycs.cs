@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
     using Entity;
 
-namespace Repository;
+namespace Repositories;
 
 public interface IcategoryRepository
 {

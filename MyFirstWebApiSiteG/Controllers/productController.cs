@@ -1,7 +1,7 @@
 ﻿using Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Service;
+using Services;
 
 namespace MyFirstWebApiSiteG.Controllers;
 

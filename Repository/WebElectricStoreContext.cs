@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Repository;
+namespace Repositories;
 
 public partial class WebElectricStoreContext : DbContext
 {

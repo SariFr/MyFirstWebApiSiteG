@@ -1,11 +1,9 @@
 ﻿using Entity;
 using Microsoft.AspNetCore.Mvc;
-using Repository;
-using Service;
+using Repositories;
+using Services;
 using System.Text.Json;
 
-//using (StreamReader reader = System.IO.File.OpenText("M:\\web-api\\userFile.txt"));
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyFirstWebApiSite.Controllers
 {
@@ -20,9 +18,8 @@ namespace MyFirstWebApiSite.Controllers
             userService = iuserService;
         }
 
-        // GET: api/<userController>
         [HttpGet]
-         public async Task<ActionResult<IEnumerable<User>>> Get([FromQuery] string userName, [FromQuery] string password)
+         public async Task<ActionResult<User>> Get([FromQuery] string userName, [FromQuery] string password)
         {
             User user = await userService.getUserByEmailAndPassword(userName, password);
             if (user == null)
@@ -31,7 +28,6 @@ namespace MyFirstWebApiSite.Controllers
 
         }
         
-        // GET api/<userController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<User>>> Get(int id)
         {
@@ -42,14 +38,16 @@ namespace MyFirstWebApiSite.Controllers
         }
 
 
-        // POST api/<userController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] User user)
         {
             try
             {
                 User newUser =await userService.addUser(user);
-                return CreatedAtAction(nameof(Get), new { id = user.UserId }, newUser);
+                if (newUser == null)
+                    return BadRequest();
+                return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
+                
             }
             catch (Exception ex)
             {
@@ -63,9 +61,9 @@ namespace MyFirstWebApiSite.Controllers
         {
             return userService.checkPassword(pwd);
         }
-        // PUT api/<userController>/5
+
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] User userToUpdate)
+        public async  Task Put(int id, [FromBody] User userToUpdate)
         {
             try
             {
@@ -79,10 +77,6 @@ namespace MyFirstWebApiSite.Controllers
         }
 
 
-        // DELETE api/<userController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+    
     }
 }

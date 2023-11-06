@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyFirstWebApiSite.Controllers;
-using Repository;
-using Service;
+using Repositories;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,7 @@ builder.Services.AddTransient<IproductRepository, productRepository>();
 builder.Services.AddTransient<IorderService, orderService>();
 builder.Services.AddTransient<IorderRepository, orderRepository>();
 
-builder.Services.AddDbContext<WebElectricStoreContext>(option => option.UseSqlServer("Server=srv2\\pupils;Database=WebElectricStore;Trusted_Connection=True;TrustServerCertificate=True\" Microsoft.EntityFrameworkCore.SqlServer -force"));
+builder.Services.AddDbContext<WebElectricStoreContext>(option => option.UseSqlServer("Server=srv2\\pupils;Database=WebElectricStore;Trusted_Connection=True;TrustServerCertificate=True"));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

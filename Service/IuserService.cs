@@ -1,6 +1,6 @@
 ﻿using Entity;
 
-namespace Service
+namespace Services
 {
     public interface IuserService
     {

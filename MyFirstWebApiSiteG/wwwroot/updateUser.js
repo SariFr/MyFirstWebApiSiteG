@@ -1,12 +1,12 @@
-﻿let userString = sessionStorage.getItem('currentUser')
-let name = JSON.parse(userString)
+﻿const userString = sessionStorage.getItem('currentUser')
+const name = JSON.parse(userString)
 
 function helloTo() {
     const hello = document.getElementById("hello")
     hello.innerHTML = `hello to ${name.firstName}`
 
 }
-function toUpdate() {
+function showUpdateFoem() {
     const update = document.getElementById("update")
     update.style.visibility = "initial"
 }
@@ -42,43 +42,5 @@ async function updateUser() {
     }
     catch (ex) {
         alert(ex.message)
-    }
-}
-async function checkPassword() {
-    var res;
-    var strength = {
-        0: "Worst",
-        1: "Bad",
-        2: "Weak",
-        3: "Good",
-        4: "Strong"
-    }
-    var password = document.getElementById("txtUpdatePassword").value;
-    var pr = document.getElementById('pr');
-    var text = document.getElementById('strength');
-
-    await fetch('api/user/check',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(password)
-
-        })
-        .then(r => r.json())
-        .then(data => res = data)
-
-
-
-
-    if (res <= 2) alert("your password is weak!! try again")
-    pr.value = res;
-    pr.max = 4;
-
-    if (password !== "") {
-        text.innerHTML = "Strength: " + strength[res];
-    } else {
-        text.innerHTML = "";
     }
 }
