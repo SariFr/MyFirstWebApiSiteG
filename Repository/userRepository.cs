@@ -12,7 +12,6 @@ namespace Repository;
 
 public class userRepository : IuserRepository
 {
-    private readonly string filePath = "../users.txt";
     private readonly WebElectricStoreContext _WebElectricStoreContext;
 
 
@@ -24,8 +23,10 @@ public class userRepository : IuserRepository
     public async Task<User> getUserByEmailAndPassword(string userName, string password)
     {
 
-         return await _WebElectricStoreContext.Users.Where(user=>user.UserName== userName && user.Password==password).FirstOrDefaultAsync();
-
+         var users= await _WebElectricStoreContext.Users.Where(user=>user.UserName== userName && user.Password==password).ToListAsync();
+        if (users.Count() > 1)
+            return null;
+        return users.FirstOrDefault();
 
    
     }
