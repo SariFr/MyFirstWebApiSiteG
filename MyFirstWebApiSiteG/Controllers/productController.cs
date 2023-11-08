@@ -1,93 +1,53 @@
 ﻿using Entity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
-namespace MyFirstWebApiSiteG.Controllers;
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-public class productController : Controller
-{ 
-    private readonly IproductService _productService;
-
-    public productController(IproductService productService)
+namespace MyFirstWebApiSiteG.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class productController : ControllerBase
     {
-        _productService = productService;
+
+        IproductService _productService;
+
+        public productController(IproductService productService)
+        {
+            _productService = productService;
+        }
+        // GET: api/<productController>
+        [HttpGet]
+        public async Task<IEnumerable<Product>> GetProductsAsync()
+        {
+            return await _productService.getProductsAsync();
+        }
+        
+
+        // GET api/<productController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
+        }
+
+        // POST api/<productController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
+
+        // PUT api/<productController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<productController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
     }
-
-    // GET: productController
-    public async Task<IEnumerable<Product>> GetProductsAsync()
-    {
-        return await _productService.getProductsAsync();
-    }
-
-    //// GET: productController/Details/5
-    //public ActionResult Details(int id)
-    //{
-    //    return View();
-    //}
-
-    //// GET: productController/Create
-    //public ActionResult Create()
-    //{
-    //    return View();
-    //}
-
-    // POST: productController/Create
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-
-//    public ActionResult Create(IFormCollection collection)
-//    {
-//        try
-//        {
-//            return RedirectToAction(nameof(Index));
-//        }
-//        catch
-//        {
-//            return View();
-//        }
-//    }
-
-//    // GET: productController/Edit/5
-//    public ActionResult Edit(int id)
-//    {
-//        return View();
-//    }
-
-//    // POST: productController/Edit/5
-//    [HttpPost]
-//    [ValidateAntiForgeryToken]
-//    public ActionResult Edit(int id, IFormCollection collection)
-//    {
-//        try
-//        {
-//            return RedirectToAction(nameof(Index));
-//        }
-//        catch
-//        {
-//            return View();
-//        }
-//    }
-
-//    // GET: productController/Delete/5
-//    public ActionResult Delete(int id)
-//    {
-//        return View();
-//    }
-
-//    // POST: productController/Delete/5
-//    [HttpPost]
-//    [ValidateAntiForgeryToken]
-//    public ActionResult Delete(int id, IFormCollection collection)
-//    {
-//        try
-//        {
-//            return RedirectToAction(nameof(Index));
-//        }
-//        catch
-//        {
-//            return View();
-//        }
-//    }
-//}
 }

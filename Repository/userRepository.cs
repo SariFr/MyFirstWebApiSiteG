@@ -22,13 +22,7 @@ public class userRepository : IuserRepository
 
     public async Task<User> getUserByEmailAndPassword(string userName, string password)
     {
-
-         var users= await _WebElectricStoreContext.Users.Where(user=>user.UserName== userName && user.Password==password).ToListAsync();
-        if (users.Count() > 1)
-            return null;
-        return users.FirstOrDefault();
-
-   
+       return await _WebElectricStoreContext.Users.Where(user=>user.UserName== userName && user.Password==password).FirstOrDefaultAsync();
     }
 
     public async Task<User> getUserById(int id)

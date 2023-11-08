@@ -1,92 +1,54 @@
 ﻿using Entity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
-namespace MyFirstWebApiSiteG.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace MyFirstWebApiSiteG.Controllers;
+
+
+[Route("api/[controller]")]
+[ApiController]
+public class orderController : ControllerBase
 {
-    public class orderController : Controller
+
+    private readonly IorderService _orderService;
+
+    public orderController(IorderService orderService)
     {
+        _orderService = orderService;
+    }
+    // GET: api/<orderController>
+    [HttpGet]
+    public IEnumerable<string> Get()
+    {
+        return new string[] { "value1", "value2" };
+    }
 
-        IorderService _orderService;
+    // GET api/<orderController>/5
+    [HttpGet("{id}")]
+    public string Get(int id)
+    {
+        return "value";
+    }
 
-        public orderController(IorderService orderService)
-        {
-            _orderService = orderService;
-        }
-        // GET: orderController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: orderController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: orderController/Create
-        public async Task<ActionResult<Order>> AddOrder(Order order)
+    // POST api/<orderController>
+    [HttpPost]
+    public async Task<Order> AddOrder(Order order)
         {
             return await _orderService.AddOrderAsync(order);
         }
+    
 
-        // POST: orderController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    // PUT api/<orderController>/5
+    [HttpPut("{id}")]
+    public void Put(int id, [FromBody] string value)
+    {
+    }
 
-        // GET: orderController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: orderController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: orderController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: orderController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    // DELETE api/<orderController>/5
+    [HttpDelete("{id}")]
+    public void Delete(int id)
+    {
     }
 }

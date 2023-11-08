@@ -43,7 +43,7 @@ namespace MyFirstWebApiSite.Controllers
         {
             try
             {
-                User newUser =await userService.addUser(user);
+                User newUser = await userService.addUser(user);
                 if (newUser == null)
                     return BadRequest();
                 return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
@@ -63,7 +63,7 @@ namespace MyFirstWebApiSite.Controllers
         }
 
         [HttpPut("{id}")]
-        public async  Task Put(int id, [FromBody] User userToUpdate)
+        public async Task Put(int id, [FromBody] User userToUpdate)
         {
             try
             {

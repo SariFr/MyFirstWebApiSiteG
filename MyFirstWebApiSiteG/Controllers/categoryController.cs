@@ -1,85 +1,52 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Entity;
 using Microsoft.AspNetCore.Mvc;
+using Services;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyFirstWebApiSiteG.Controllers
 {
-    public class categoryController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class categoryController : ControllerBase
     {
+        IcategoryService _categoryService;
 
-
-        // GET: categoryController
-        public ActionResult Index()
+        public categoryController(IcategoryService categoryService)
         {
-            return View();
+            _categoryService = categoryService;
+        }
+        // GET: api/<productController>
+        [HttpGet]
+        public async Task<IEnumerable<Category>> GetProductsAsync()
+        {
+            return await _categoryService.getCategoriesAsync();
         }
 
-        // GET: categoryController/Details/5
-        public ActionResult Details(int id)
+
+        // GET api/<categoryController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
         {
-            return View();
+            return "value";
         }
 
-        // GET: categoryController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: categoryController/Create
+        // POST api/<categoryController>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public void Post([FromBody] string value)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
-        // GET: categoryController/Edit/5
-        public ActionResult Edit(int id)
+        // PUT api/<categoryController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
         {
-            return View();
         }
 
-        // POST: categoryController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        // DELETE api/<categoryController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: categoryController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: categoryController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
