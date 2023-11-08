@@ -10,7 +10,7 @@ namespace MyFirstWebApiSiteG.Controllers
     [ApiController]
     public class categoryController : ControllerBase
     {
-        IcategoryService _categoryService;
+        private readonly IcategoryService _categoryService;
 
         public categoryController(IcategoryService categoryService)
         {
