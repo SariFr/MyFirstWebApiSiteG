@@ -1,14 +1,17 @@
-﻿async function getAllProduct() {
+﻿async function getAllProduct(url) {
     try {
-        const res = await fetch('api/product')
+        const res = await fetch(url)
         if (!res.ok)
             throw new Error("failed")
         const products = await res.json()
 
-        if (products)
+        if (products) {
+            document.getElementById('PoductList').replaceChildren([]);
+
             products.map(p =>
-               drawProduct(p)
+                drawProduct(p)
             );
+        }
             
         else
             alert("not found product");
@@ -43,16 +46,15 @@ async function getAllCategory() {
 }
 async function drawProduct(p) {
     const temp = document.getElementById('temp-card')
-    const clone = temp.content.cloneNode(true)//chack
+    const clone = temp.content.cloneNode(true)
     clone.querySelector("img").src = "./pictures/" + p.image.trim()
-    clone.querySelector("h1").innertext = p.name.trim()
-    clone.querySelector(".price").innerhtml = p.price
-    clone.querySelector(".description").innerhtml = p.des.trim()
-    //clone.querySelector(".button").addEventListener(click, addToCart(p))
+    clone.querySelector("h1").innerText = p.name
+    clone.querySelector(".price").innerText = p.price
+    clone.querySelector(".description").innerText = p.des
+    clone.querySelector("button").addEventListener('click', () => addToCart(JSON.stringify(p)))
 
 
-    const list = document.getElementById('PoductList');
-    list.appendChild(clone);
+    document.getElementById('PoductList').appendChild(clone);
 } 
 
 async function addToCart(p) {
@@ -61,15 +63,46 @@ async function addToCart(p) {
 
 async function showCategory(c) {
     const temp = document.getElementById('temp-category')
-    const clone = temp.content.cloneNode(true)//chack
-    clone.querySelector("label").for = c.name.trim();
-    clone.querySelector("input").value = c.name.trim();
-    clone.querySelector("input").id = c.categoryId.trim();
-    clone.querySelector(".OptionName").innerText = c.name.trim()
+    const clone = temp.content.cloneNode(true)
+    clone.querySelector("label").for = c.name
+    clone.querySelector("input").innerText = c.name
+    clone.querySelector("input").id = c.categoryId;
+    clone.querySelector(".OptionName").innerText = c.name
+    //clone.querySelector("button").addEventListener('click', () => addToCart(JSON.stringify(p)))
+
     const list = document.getElementById('categoryList');
     list.appendChild(clone);
 }
 
-async function filterProduct() {
+async function filterProducts() {
+    let url = 'https://localhost:44383/api/product'
+    let categories = []
+    let allCategoryOption = document.querySelectorAll(".opt");
+    for (let i = 0; i < allCategoryOption.length; i++) {
+        if (allCategoryOption[i].checked)
+            categories.push(allCategoryOption[i])
+    }
+    let name = document.getElementById("nameSearch").value
+    let minPrice = document.getElementById("minPrice").value
+    let maxPrice = document.getElementById("maxPrice").value
+
+    if (name || categories || minPrice || maxPrice)
+        url += '?'
+    if (name)
+        url += 'name=' + name
+    if (minPrice)
+        url += '&minPrice=' + minPrice
+    if (maxPrice)
+        url += '&maxPrice=' + maxPrice
+    if (categories)
+    { 
+        for (let i = 0; i < categories.length; i++)
+        {
+            url += '&categoryIds=' + categories[i]
+        }
+    }
+
+
+    getAllProduct(url);
 
 }
