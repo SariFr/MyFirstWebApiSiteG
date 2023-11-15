@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entity;
 
-namespace Repositories;
-
+namespace Repository
+{
     public interface IorderRepository
     {
         Task<Order> AddOrderAsync(Order order);
     }
+}

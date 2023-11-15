@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services;
-
-public interface IcategoryService
+namespace Repository
 {
-    Task<IEnumerable<Category>> getCategoriesAsync();
-
+    public interface IcategoryService
+    {
+        Task<IEnumerable<Category>> GetCategoriesAsync();
+    }
 }

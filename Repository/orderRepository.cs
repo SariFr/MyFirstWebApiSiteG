@@ -1,26 +1,27 @@
 ﻿using Entity;
+using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories;
-
-public class orderRepository : IorderRepository
+namespace Repository
 {
-    private readonly WebElectricStoreContext _WebElectricStoreContext;
-
-
-    public orderRepository(WebElectricStoreContext WebElectricStoreContext)
+    public class orderRepository:IorderRepository
+    
     {
-        _WebElectricStoreContext = WebElectricStoreContext;
-    }
-    public async Task<Order> AddOrderAsync(Order order)
-    {
-        await _WebElectricStoreContext.Orders.AddAsync(order);
-        await _WebElectricStoreContext.SaveChangesAsync();
+        private readonly WebElectricStoreContext _webElectricStoreContext;
+        public orderRepository(WebElectricStoreContext WebElectricStore1Context)
+        {
+            _webElectricStoreContext = WebElectricStore1Context;
+        }
 
-        return order;
+        public async Task<Order> AddOrderAsync(Order order)
+        {
+            await _webElectricStoreContext.Orders.AddAsync(order);
+            await _webElectricStoreContext.SaveChangesAsync();
+            return order;
+        }
     }
 }

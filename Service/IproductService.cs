@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services;
-
-public interface IproductService
+namespace Repository
 {
-    Task<IEnumerable<Product>> getProductsAsync();
-
+    public interface IproductService
+    {
+        Task<IEnumerable<Product>> getProductAsync(int? position, int? skip, string? name, int? minPrice, int? maxPrice, int?[] categoryIds); 
+    }
 }

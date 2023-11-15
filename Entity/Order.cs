@@ -10,7 +10,7 @@ public partial class Order
 
     public int? UserId { get; set; }
 
-    public double? OrderSum { get; set; }
+    public int? OrderSum { get; set; }
 
     public DateTime? OrderDate { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using Entity;
+using System.ComponentModel;
 
-namespace Repositories
+namespace Repository
 {
     public interface IuserRepository
     {

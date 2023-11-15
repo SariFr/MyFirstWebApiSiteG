@@ -1,28 +1,25 @@
 ﻿using Entity;
-using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services;
-
-
-public class categoryService : IcategoryService
+namespace Repository
 {
-    private readonly IcategoryRepository _catgoryRepository;
-
-    public categoryService(IcategoryRepository catgoryRepository)
+    public class categoryService:IcategoryService
     {
-        _catgoryRepository = catgoryRepository;
+        private readonly IcategoryRepository _categoryRepository;
+
+
+        public categoryService(IcategoryRepository categoryRepository)
+        {
+            _categoryRepository = categoryRepository;
+        }
+
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
+        {
+            return await _categoryRepository.GetCategoriesAsync();
+        }
     }
-
-    public async Task<IEnumerable<Category>> getCategoriesAsync()
-    {
-        return await _catgoryRepository.getCategoriesAsync();
-    }
-
-
-
 }

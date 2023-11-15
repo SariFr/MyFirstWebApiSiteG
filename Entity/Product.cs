@@ -14,13 +14,11 @@ public partial class Product
 
     public double Price { get; set; }
 
-    public string? Des { get; set; }
+    public string Des { get; set; } = null!;
 
     public string? Image { get; set; }
 
-    [JsonIgnore]
-
-    public virtual Category? Category { get; set; } = null!;
+    public virtual Category Category { get; set; } = null!;
 
     [JsonIgnore]
     public virtual ICollection<OrderItem>? OrderItems { get; set; } = new List<OrderItem>();

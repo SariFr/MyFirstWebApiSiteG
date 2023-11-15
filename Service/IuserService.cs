@@ -1,6 +1,6 @@
 ﻿using Entity;
 
-namespace Services
+namespace Service
 {
     public interface IuserService
     {
@@ -9,6 +9,5 @@ namespace Services
         Task<User> getUserByEmailAndPassword(string userName, string password);
         Task updateUser(int id, User user);
         Task<User> getUserById(int id);
-
     }
 }

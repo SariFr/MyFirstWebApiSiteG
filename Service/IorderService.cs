@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services;
-
-public interface IorderService
+namespace Repository
 {
-    Task<Order> AddOrderAsync(Order order);
+    public interface IorderService
+    {
+        Task<Order> AddOrderAsync(Order order);
+    }
 }
