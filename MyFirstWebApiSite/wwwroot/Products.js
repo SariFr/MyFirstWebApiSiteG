@@ -68,7 +68,7 @@ async function showCategory(c) {
     clone.querySelector("input").innerText = c.name
     clone.querySelector("input").id = c.categoryId;
     clone.querySelector(".OptionName").innerText = c.name
-    //clone.querySelector("button").addEventListener('click', () => addToCart(JSON.stringify(p)))
+    clone.querySelector("a").addEventListener('click', () => filterProducts())
 
     const list = document.getElementById('categoryList');
     list.appendChild(clone);

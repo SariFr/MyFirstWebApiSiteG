@@ -22,7 +22,7 @@ namespace Repository
             var query = _WebElectricStoreContext.Products.Where(product =>
             (name == null ? (true) : (product.Name.Contains(name)))
             && ((minPrice == null) ? (true) : (product.Price >= minPrice))
-            && ((maxPrice == null) ? (true) : (product.Price >= maxPrice))
+            && ((maxPrice == null) ? (true) : (product.Price <= maxPrice))
             && ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(product.CategoryId)))
             ).OrderBy(product => product.Price);
             
