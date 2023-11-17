@@ -1,11 +1,15 @@
 ﻿async function getAllProduct(url) {
     try {
+        const prod = JSON.parse(sessionStorage.getItem('products'))
+
+        document.querySelector('.ItemCount').innerText = prod.length
         const res = await fetch(url)
         if (!res.ok)
             throw new Error("failed")
         const products = await res.json()
 
         if (products) {
+            document.getElementById('counter').innerText = products.length
             document.getElementById('PoductList').replaceChildren([]);
 
             products.map(p =>
@@ -51,15 +55,35 @@ async function drawProduct(p) {
     clone.querySelector("h1").innerText = p.name
     clone.querySelector(".price").innerText = p.price
     clone.querySelector(".description").innerText = p.des
-    clone.querySelector("button").addEventListener('click', () => addToCart(JSON.stringify(p)))
+    clone.querySelector("button").addEventListener('click', () => addToCart(p))
 
 
     document.getElementById('PoductList').appendChild(clone);
 } 
-
+let listToSession = []
+count=0
 async function addToCart(p) {
-    sessionStorage.setItem('product', p)
-}
+    const products = JSON.parse(sessionStorage.getItem('products'))
+    if (products) {
+        const prod = products.filter(pr => p.productId == pr.productId)
+        if (prod.length == 0) {
+
+            count++
+            document.querySelector('.ItemCount').innerText = count
+            listToSession.push(p)
+            sessionStorage.setItem('products', JSON.stringify(listToSession))
+        }
+
+    }
+    else {
+        count++
+        document.querySelector('.ItemCount').innerText = count
+        listToSession.push(p)
+        sessionStorage.setItem('products', JSON.stringify(listToSession))
+    }
+    }
+
+
 
 async function showCategory(c) {
     const temp = document.getElementById('temp-category')
@@ -68,7 +92,6 @@ async function showCategory(c) {
     clone.querySelector("input").innerText = c.name
     clone.querySelector("input").id = c.categoryId;
     clone.querySelector(".OptionName").innerText = c.name
-    clone.querySelector("a").addEventListener('click', () => filterProducts())
 
     const list = document.getElementById('categoryList');
     list.appendChild(clone);
@@ -80,7 +103,7 @@ async function filterProducts() {
     let allCategoryOption = document.querySelectorAll(".opt");
     for (let i = 0; i < allCategoryOption.length; i++) {
         if (allCategoryOption[i].checked)
-            categories.push(allCategoryOption[i])
+            categories.push(allCategoryOption[i].id)
     }
     let name = document.getElementById("nameSearch").value
     let minPrice = document.getElementById("minPrice").value
