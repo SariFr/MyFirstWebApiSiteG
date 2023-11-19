@@ -1,8 +1,10 @@
 ﻿async function getAllProduct(url) {
     try {
         const prod = JSON.parse(sessionStorage.getItem('products'))
-
-        document.querySelector('.ItemCount').innerText = prod.length
+        if (!prod)
+            document.querySelector('.ItemCount').innerText =0
+        else
+            document.querySelector('.ItemCount').innerText = prod.length
         const res = await fetch(url)
         if (!res.ok)
             throw new Error("failed")
@@ -67,7 +69,8 @@ async function addToCart(p) {
     if (products) {
         const prod = products.filter(pr => p.productId == pr.productId)
         if (prod.length == 0) {
-
+            listToSession = products
+            count = products.length
             count++
             document.querySelector('.ItemCount').innerText = count
             listToSession.push(p)
