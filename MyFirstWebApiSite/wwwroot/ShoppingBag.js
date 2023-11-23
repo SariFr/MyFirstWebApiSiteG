@@ -49,30 +49,39 @@ async function deleteProduct(p)
 }
 
 async function placeOrder() {
-    try {
-        //const userName = document.getElementById("txtNewUserName").value
-        //const password = document.getElementById("txtNewPassword").value
-        //const firstName = document.getElementById("txtFirstName").value
-        const orderSum = document.getElementById('totalAmount').value
+    const user = sessionStorage.getItem('currentUser')
+    if (!user)
+        window.location.href = './home.html';
+    else {
+        try {
+            const products = JSON.parse(sessionStorage.getItem('products'))
+            const userId = JSON.parse(user).userId
 
-        const order = { userName, password, firstName, orderSum }
-        console.log(user)
+            const orderSum = allprice
+            const orderDate = new Date()
+            const orderItem = []
+            products.map(p => orderItem.push({ "ProductId": p.productId, "Quantity": 1 }));
+            const order = { "userId": userId, "orderDate": orderDate, "orderSum": orderSum, "orderItem": orderItem }
+            console.log(order)
 
-        const res = await fetch("api/user", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-        if (!res.ok)
-            throw new Error("Error add user to server")
-        const data = await res.json()
-        alert(`user ${data.userName} was added`)
-        sessionStorage.setItem("currentUser", JSON.stringify(data))
-    }
-    catch (ex) {
-        alert("error")
+            const res = await fetch("api/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(order)
+            })
+            if (!res.ok)
+                throw new Error("Error add order to server")
+            const data = await res.json()
+            alert(`בוצעה בהצלחה ${data} הזמנתך מספר`)
+            sessionStorage.setItem('products', [])
+            window.location.href = './Products.html';
+
+        }
+        catch (ex) {
+            alert("error")
+        }
     }
 }
 
