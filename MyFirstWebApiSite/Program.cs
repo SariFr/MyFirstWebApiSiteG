@@ -4,6 +4,7 @@ using Repository;
 using Service;
 using Zxcvbn;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,7 +22,6 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<WebElectricStoreContext>(option => option.UseSqlServer("Server=srv2\\pupils;Database=WebElectricStore;Trusted_Connection=True;TrustServerCertificate=True"));
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
