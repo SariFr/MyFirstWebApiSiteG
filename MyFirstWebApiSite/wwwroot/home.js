@@ -3,12 +3,21 @@
 
         const userName = document.getElementById("txtUserName").value;
         const password = document.getElementById("txtPassword").value;
+        const userLoginDTO = { userName, password }
+        const res = await fetch("api/user/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userLoginDTO)
+        })
+        
 
-        const res = await fetch(`api/user?userName=${userName}&password=${password}`)
         if (!res.ok)
             throw new Error("pleas register")
         const data = await res.json()
         sessionStorage.setItem("currentUser", JSON.stringify(data))
+
         if (sessionStorage.getItem("products"))
             window.location.href = './ShoppingBag.html';
         else

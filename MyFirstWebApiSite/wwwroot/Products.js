@@ -102,7 +102,7 @@ async function showCategory(c) {
 }
 
 async function filterProducts() {
-    let url = 'https://localhost:44383/api/product'
+    let url = 'https://localhost:7151/api/product'
     let categories = []
     let allCategoryOption = document.querySelectorAll(".opt");
     for (let i = 0; i < allCategoryOption.length; i++) {

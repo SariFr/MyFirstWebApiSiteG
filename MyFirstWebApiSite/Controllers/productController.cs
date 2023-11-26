@@ -25,7 +25,6 @@ namespace MyFirstWebApiSite.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> getProductAsync(int? position, int? skip, string? name, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
         {
-            //return await _productService.getProductAsync(position, skip, name, minPrice, maxPrice,  categoryIds);
             IEnumerable<Product> products = await _productService.getProductAsync(position, skip, name, minPrice, maxPrice,categoryIds);
             IEnumerable<ProductDTO> productsDTO = _Mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
             return products != null ? Ok(productsDTO) : BadRequest();
