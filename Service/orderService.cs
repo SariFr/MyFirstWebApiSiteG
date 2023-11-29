@@ -18,6 +18,13 @@ namespace Repository
 
         public async Task<Order> AddOrderAsync(Order order)
         {
+            //int[] prodId = new int();
+            //for(int i=0;i<order.OrderItems.Count;i++)
+            //{
+
+            //}
+            //order.OrderItems.
+            //IEnumerable<Product> listProduct = await _orderRepository.GetProductsById(prodId);
             return await _orderRepository.AddOrderAsync(order);
         }
     }

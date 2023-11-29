@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NLog.Web;
 using Repositories;
 using Repository;
 using Service;
@@ -23,7 +24,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<WebElectricStoreContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("WebElectricStore")));
-
+builder.Host.UseNLog();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

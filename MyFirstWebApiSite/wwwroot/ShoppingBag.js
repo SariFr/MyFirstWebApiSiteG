@@ -61,7 +61,7 @@ async function placeOrder() {
             const orderDate = new Date()
             const orderItem = []
             products.map(p => orderItem.push({ "ProductId": p.productId, "Quantity": 1 }));
-            const order = { "userId": userId, "orderDate": orderDate, "orderSum": orderSum, "orderItem": orderItem }
+            const order = { "userId": userId, "orderDate": orderDate, "orderSum": orderSum, "orderItems": orderItem }
             console.log(order)
 
             const res = await fetch("api/order", {
@@ -74,7 +74,7 @@ async function placeOrder() {
             if (!res.ok)
                 throw new Error("Error add order to server")
             const data = await res.json()
-            alert(`בוצעה בהצלחה ${data} הזמנתך מספר`)
+            alert(`בוצעה בהצלחה ${data.orderId} הזמנתך מספר`)
             sessionStorage.setItem('products', [])
             window.location.href = './Products.html';
 
