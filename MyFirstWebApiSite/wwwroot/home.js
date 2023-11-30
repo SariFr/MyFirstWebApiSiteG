@@ -1,4 +1,4 @@
-﻿async function loginServer() {
+﻿async function register() {
     try {
 
         const userName = document.getElementById("txtUserName").value;
@@ -13,8 +13,8 @@
         })
         
 
-        if (!res.ok)
-            throw new Error("pleas register")
+        if (res.status!=200)
+            throw new Error("user name or password are incorrect")
         const data = await res.json()
         sessionStorage.setItem("currentUser", JSON.stringify(data))
 
@@ -31,11 +31,11 @@
 
 
 function newUser() {
-    const new1 = document.getElementById("new")
-    new1.style.visibility = "initial"
+    const newDiv = document.getElementById("new")
+    newDiv.style.visibility = "initial"
 }
 
-async function addUserToServer() {
+async function register() {
     try {
         const userName = document.getElementById("txtNewUserName").value
         const password = document.getElementById("txtNewPassword").value
@@ -59,22 +59,22 @@ async function addUserToServer() {
         sessionStorage.setItem("currentUser", JSON.stringify(data))
     }
     catch (ex) {
-        alert("error")
+        alert(ex)
     }
 }
 
 async function checkPassword() {
     var res;
-    var strength = {
+    const strength = {
         0: "Worst",
         1: "Bad",
         2: "Weak",
         3: "Good",
         4: "Strong"
     }
-    var password = document.getElementById("txtNewPassword").value;
-    var pr = document.getElementById('pr');
-    var text = document.getElementById('strength');
+    const password = document.getElementById("txtNewPassword").value;
+    const pr = document.getElementById('pr');
+    const text = document.getElementById('strength');
 
     await fetch('api/user/check',
         {

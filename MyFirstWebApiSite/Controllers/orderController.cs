@@ -32,17 +32,13 @@ namespace MyFirstWebApiSite.Controllers
                 Order order = _Mapper.Map<OrderDTO, Order>(orders);
                 Order orderCreate = await _orderService.AddOrderAsync(order);
                 OrderDTO orderDTO = _Mapper.Map<Order, OrderDTO>(orderCreate);
-                return orderCreate != null ? CreatedAtAction(nameof(Get), new { id = orderDTO.UserId }, orderDTO) : NoContent();
+                return orderCreate != null ? CreatedAtAction(nameof(AddOrder), new { id = orderDTO.UserId }, orderDTO) : NoContent();
             }
             catch(Exception e)
             {
                 return BadRequest();
             }
             }
-        [HttpGet]
-        public string Get(int id)
-        {
-            return "string";
-        }
+     
     }
 }

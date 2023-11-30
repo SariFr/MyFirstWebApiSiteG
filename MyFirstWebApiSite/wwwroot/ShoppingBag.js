@@ -62,7 +62,6 @@ async function placeOrder() {
             const orderItem = []
             products.map(p => orderItem.push({ "ProductId": p.productId, "Quantity": 1 }));
             const order = { "userId": userId, "orderDate": orderDate, "orderSum": orderSum, "orderItems": orderItem }
-            console.log(order)
 
             const res = await fetch("api/order", {
                 method: "POST",

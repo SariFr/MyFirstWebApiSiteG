@@ -29,5 +29,11 @@ namespace Repository
 
             return await query.ToListAsync();
         }
+
+        public async Task<IEnumerable<Product>> GetProductsById(int[] prodsId)
+        {
+            var query = _WebElectricStoreContext.Products.Where(p => prodsId.Contains(p.ProductId));
+            return await query.ToListAsync();
+        }
     }
 }
