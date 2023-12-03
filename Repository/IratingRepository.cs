@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public interface IcategoryRepository
+     public interface IratingRepository
     {
-        Task<IEnumerable<Category>> GetCategoriesAsync();
+        Task<Rating> addRating(Rating rating);
     }
 }

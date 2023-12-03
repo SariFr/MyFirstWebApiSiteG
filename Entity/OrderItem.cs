@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Entity;
+namespace Entities;
 
 public partial class OrderItem
 {

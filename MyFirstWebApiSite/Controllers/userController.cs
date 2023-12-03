@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DTO;
-using Entity;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using System.Text.Json;
@@ -96,12 +96,15 @@ namespace MyFirstWebApiSite.Controllers
         }
         // PUT api/<userController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] User userToUpdate)
+        public async Task Put(int id, [FromBody] UserDTO userToUpdate)
         {
 
             try
             {
-               await _userService.updateUser(id, userToUpdate);
+                userToUpdate.UserId = id;
+                User user = _Mapper.Map<UserDTO, User>(userToUpdate);
+
+                await _userService.updateUser(id, user);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,4 @@
-﻿using Entity;
+﻿using Entities;
 
 namespace Service
 {

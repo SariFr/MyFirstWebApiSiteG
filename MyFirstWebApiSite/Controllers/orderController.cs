@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DTO;
-using Entity;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
 

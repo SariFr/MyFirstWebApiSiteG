@@ -1,4 +1,4 @@
-﻿async function register() {
+﻿async function login() {
     try {
 
         const userName = document.getElementById("txtUserName").value;

@@ -1,4 +1,4 @@
-﻿using Entity;
+﻿using Entities;
 using System.ComponentModel;
 
 namespace Repository

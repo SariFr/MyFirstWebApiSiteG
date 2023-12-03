@@ -73,7 +73,7 @@ async function placeOrder() {
             if (!res.ok)
                 throw new Error("Error add order to server")
             const data = await res.json()
-            alert(`בוצעה בהצלחה ${data.orderId} הזמנתך מספר`)
+            alert(`your order num ${data.orderId} are placed`)
             sessionStorage.setItem('products', [])
             window.location.href = './Products.html';
 

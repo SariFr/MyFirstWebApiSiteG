@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Microsoft.EntityFrameworkCore;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,19 +8,22 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class categoryRepository:IcategoryRepository
+    public class ratingRepository
     {
         private readonly WebElectricStoreContext _WebElectricStoreContext;
 
-
-        public categoryRepository(WebElectricStoreContext WebElectricStoreContext)
+        public ratingRepository(WebElectricStoreContext WebElectricStoreContext)
         {
             _WebElectricStoreContext = WebElectricStoreContext;
         }
 
-        public async Task<IEnumerable<Category>> GetCategoriesAsync()
+        public async Task<Rating> addRating(Rating rating)
         {
-            return await _WebElectricStoreContext.Categories.ToListAsync();
+
+            await _WebElectricStoreContext.Ratings.AddAsync(rating);
+            await _WebElectricStoreContext.SaveChangesAsync();
+
+            return rating;
         }
     }
 }
