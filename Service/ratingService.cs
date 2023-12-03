@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class ratingService
+    public class ratingService: IratingService
     {
 
         private readonly IratingRepository _ratingRepository;
@@ -22,10 +22,7 @@ namespace Service
 
         public async Task<Rating> addRating(Rating rating)
         {
-
             return await _ratingRepository.addRating(rating);
-
-             
         }
     }
 }

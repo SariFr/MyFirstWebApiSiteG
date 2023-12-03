@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MyFirstWebApiSite.middleware;
 using NLog.Web;
 using Repositories;
 using Repository;
@@ -19,6 +20,9 @@ builder.Services.AddTransient<IorderService, orderService>();
 builder.Services.AddTransient<IorderRepository, orderRepository>();
 builder.Services.AddTransient<IcategoryService, categoryService>();
 builder.Services.AddTransient<IcategoryRepository, categoryRepository>();
+builder.Services.AddTransient<IratingRepository, ratingRepository>();
+builder.Services.AddTransient<IratingService, ratingService>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
@@ -38,8 +42,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
+
+app.UseRatingMiddleware();
+
 
 app.UseStaticFiles();
 

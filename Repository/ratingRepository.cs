@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class ratingRepository
+    public class ratingRepository:IratingRepository
     {
         private readonly WebElectricStoreContext _WebElectricStoreContext;
 
