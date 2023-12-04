@@ -29,7 +29,7 @@ public partial class WebElectricStoreContext : DbContext
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<Rating> Ratings { get; set; }
+    //public virtual DbSet<Rating> Ratings { get; set; }
 
 
 
@@ -113,7 +113,7 @@ public partial class WebElectricStoreContext : DbContext
                 .HasMaxLength(30)
                 .IsFixedLength();
         });
-        modelBuilder.Entity<Rating>(entity =>
+        /*modelBuilder.Entity<Rating>(entity =>
         {
             entity.ToTable("RATING");
 
@@ -141,7 +141,7 @@ public partial class WebElectricStoreContext : DbContext
                 .HasMaxLength(100);
 
             entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
-        });
+        });*/
 
         OnModelCreatingPartial(modelBuilder);
     }
