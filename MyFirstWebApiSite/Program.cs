@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MyFirstWebApiSite.middleware;
 using NLog.Web;
+using PresidentsApp.Middlewares;
 using Repositories;
 using Repository;
 using Service;
@@ -41,11 +42,11 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
 app.UseRatingMiddleware();
 
+app.UseErrorHandlingMiddleware();
+
+app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 

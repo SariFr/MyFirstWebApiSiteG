@@ -32,26 +32,16 @@ namespace MyFirstWebApiSite.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserLoginDTO>> login([FromBody] UserLoginDTO userLogin)
         {
-            try
-            {
-                User user = await _userService.getUserByEmailAndPassword(userLogin.UserName, userLogin.Password);
+            User user = await _userService.getUserByEmailAndPassword(userLogin.UserName, userLogin.Password);
 
-                if (user != null)
-                {
+            if (user != null)
+            {
                     UserLoginDTO userCreate = _Mapper.Map<User, UserLoginDTO>(user);
                     _logger.LogInformation($"Login attempted with User name ,{userCreate.UserName} and password {userCreate.Password}");
                     return Ok(userCreate);
-                }
-                throw new Exception("someone try to login but don't sucsses");
-               
-            }            
-
-            catch(Exception e)
-            {
-                _logger.LogError(e.Message);  
-                return NoContent();
-            } 
-          
+            }
+            return NoContent();
+            
         }
 
         // GET api/<userController>/5
@@ -72,21 +62,14 @@ namespace MyFirstWebApiSite.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserDTO userDTO)
         {
+            User user = _Mapper.Map<UserDTO, User>(userDTO);
+            User newUser = await _userService.addUser(user);
+            UserDTO newUserDTO = _Mapper.Map<User, UserDTO>(newUser);
 
-            try
-            {
-                User user = _Mapper.Map<UserDTO, User>(userDTO);
-
-                User newUser = await _userService.addUser(user);
-
-                if (newUser == null)
+            if (newUser == null)
                     return BadRequest();
-                return CreatedAtAction(nameof(Get), new { id = user.UserId }, newUser);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                return CreatedAtAction(nameof(Get), new { id = user.UserId }, newUserDTO);
+            
         }
 
         [HttpPost("check")]
@@ -98,18 +81,10 @@ namespace MyFirstWebApiSite.Controllers
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] UserDTO userToUpdate)
         {
-
-            try
-            {
                 userToUpdate.UserId = id;
                 User user = _Mapper.Map<UserDTO, User>(userToUpdate);
-
                 await _userService.updateUser(id, user);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+          
 
         }
 
